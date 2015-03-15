@@ -13,6 +13,11 @@ module Deliver
       resulting_path = "#{export_path}/#{Time.now.to_i}.pdf"
       Prawn::Document.generate(resulting_path) do
 
+        # Adding default OSX font 华文仿宋 to handle Simplified Chinese.
+        
+        font_families["华文仿宋"] = {
+          :normal => { :file => "/Library/Fonts/华文仿宋.ttf", :font => "华文仿宋" }
+        }
   
         # Adding Mona to handle Japanese. The Prawn docs say not to use the included Kai font so we're
         # using this 3rd-party font instead.
@@ -21,7 +26,7 @@ module Deliver
           :normal => { :file => "#{fontdir}/mona.ttf", :font => "Mona" }
         }
         
-        pdf_fallback_fonts = [ "Mona" ]
+        pdf_fallback_fonts = [ "Mona", "华文仿宋" ]
 
         font "Helvetica" # Set main document font
 
